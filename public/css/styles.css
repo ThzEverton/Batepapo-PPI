@@ -1,0 +1,249 @@
+/* Resetando estilos padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo e fundo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Estilos do contêiner de login e registro */
+.login-register-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Títulos principais */
+h1, h2 {
+    color: #4CAF50;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Formulários */
+form {
+    width: 100%;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #4CAF50;
+}
+
+/* Botões */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Link de navegação entre login e registro */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 15px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .login-register-container {
+        padding: 20px;
+    }
+
+    h1, h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Resetando estilos padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos globais */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Layout do Chat */
+#chat-container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: absolute; /* Preenche toda a tela */
+}
+
+/* Área de mensagens */
+#messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+/* Estilo das mensagens (balões) */
+.message {
+    max-width: 80%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    line-height: 1.4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Alinhar à direita para o usuário que enviou a mensagem */
+.message.sender {
+    background-color: #4caf50;
+    color: white;
+    margin-left: auto;
+}
+
+/* Alinhar à esquerda para o usuário que recebeu a mensagem */
+.message.receiver {
+    background-color: #f1f0f0;
+    color: #333;
+    margin-right: auto;
+}
+
+/* Estilo para o horário */
+.message .timestamp {
+    font-size: 0.8rem;
+    color: #888;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+/* Ajustes para a caixa de texto */
+#message-form {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+#message-form input {
+    width: calc(100% - 60px);
+    padding: 12px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    font-size: 1rem;
+    background-color: #f1f1f1;
+}
+
+/* Estilo do botão de enviar */
+#message-form button {
+    width: 50px; /* Largura igual à altura para deixar o botão quadrado */
+    height: 50px; /* Altura do botão */
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 12px; /* Bordas arredondadas */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#message-form button:hover {
+    background-color: #0056b3;
+}
+/* Ícone de logout no topo */
+#logout {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#logout a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+#logout a:hover {
+    color: #4CAF50;
+}
+
+/* Ícone do FontAwesome */
+#logout i {
+    margin-right: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #chat-container {
+        height: 90vh;
+    }
+}

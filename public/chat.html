@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Adicionando o Font Awesome para ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="chat-container">
+        <!-- Ícone de Logout no topo -->
+        <div id="logout">
+            <a href="/logout" id="logout-link">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </a>
+        </div>
+        
+        <h2>Chat</h2>
+        
+        <div id="message-box">
+            <div id="messages">
+                <!-- Mensagens serão injetadas aqui -->
+            </div>
+        </div>
+
+        <!-- Campo de enviar mensagem -->
+        <form id="message-form" action="/send-message" method="POST">
+            <input type="text" id="message-input" name="message" placeholder="Digite sua mensagem..." required>
+            <button type="submit">Enviar</button>
+        </form>
+        
+        <!-- Lista de usuários -->
+        <div id="users-list">
+            <label for="user-select">Escolha um usuário:</label>
+            <select id="user-select" name="user">
+                <!-- Usuários serão injetados aqui -->
+            </select>
+        </div>
+    </div>
+
+    <script>
+        // Carregar lista de usuários cadastrados
+        fetch('/users')
+            .then(response => response.json())
+            .then(users => {
+                const selectElement = document.getElementById('user-select');
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.email;
+                    option.textContent = user.name;
+                    selectElement.appendChild(option);
+                });
+            });
+
+        // Exibir mensagens
+        function loadMessages() {
+            fetch('/messages')
+                .then(response => response.json())
+                .then(messages => {
+                    const messagesContainer = document.getElementById('messages');
+                    messagesContainer.innerHTML = ''; // Limpa mensagens anteriores
+                    messages.forEach(msg => {
+                        const messageElement = document.createElement('div');
+                        messageElement.classList.add('message', msg.user === 'Admin' ? 'admin' : 'user');
+                        messageElement.innerHTML = ` 
+                            <strong>${msg.user}</strong>: ${msg.message} <span class="timestamp">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+                        `;
+                        messagesContainer.appendChild(messageElement);
+                    });
+                });
+        }
+
+        // Chama a função de carregar mensagens a cada 2 segundos
+        setInterval(loadMessages, 2000);
+
+        // Previne o envio padrão do formulário
+        const messageForm = document.getElementById('message-form');
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            const userSelect = document.getElementById('user-select');
+            const userEmail = userSelect.value; // Captura o email do usuário selecionado
+
+            // Verifica se a mensagem não está vazia e se um usuário foi selecionado
+            if (message.trim() && userEmail) {
+                fetch('/send-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `message=${encodeURIComponent(message)}&userEmail=${encodeURIComponent(userEmail)}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        messageInput.value = ''; // Limpa o campo após envio
+                        loadMessages(); // Atualiza as mensagens
+                    }
+                });
+            } else {
+                alert("Por favor, selecione um usuário e digite uma mensagem.");
+            }
+        });
+
+        // Carrega mensagens ao abrir a página
+        loadMessages();
+    </script>
+</body>
+</html>
