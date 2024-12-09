@@ -34,6 +34,14 @@ app.use((req, res, next) => {
     next();
 });
 
+// Middleware de autenticação
+function isAuthenticated(req, res, next) {
+    if (!req.session.user) {
+        return res.redirect("/index.html"); // Redireciona para a página de login se não autenticado
+    }
+    next();
+}
+
 // Rota para registrar um novo usuário
 app.post("/register", (req, res) => {
     const { name, email, password } = req.body;
@@ -44,7 +52,7 @@ app.post("/register", (req, res) => {
         return res.status(400).send("Email já cadastrado!");
     }
     users.push({ name, email, password });
-    res.redirect("/");
+    res.redirect("/index.html");
 });
 
 // Rota de login
@@ -60,10 +68,7 @@ app.post("/login", (req, res) => {
 });
 
 // Rota para enviar uma mensagem
-app.post("/send-message", (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send("Você não está autenticado!");
-    }
+app.post("/send-message", isAuthenticated, (req, res) => {
     const { message, userEmail } = req.body;
     if (!message || !userEmail) {
         return res.status(400).send("Mensagem ou usuário não podem estar vazios!");
@@ -79,18 +84,12 @@ app.post("/send-message", (req, res) => {
 });
 
 // Rota para obter as mensagens
-app.get("/messages", (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send("Você não está autenticado!");
-    }
+app.get("/messages", isAuthenticated, (req, res) => {
     res.json(messages);
 });
 
 // Rota para pegar os usuários cadastrados
-app.get("/users", (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send("Você não está autenticado!");
-    }
+app.get("/users", isAuthenticated, (req, res) => {
     res.json(users);
 });
 
